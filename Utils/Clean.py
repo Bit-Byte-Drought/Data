@@ -1,4 +1,4 @@
-def clean_rainfall(loc):
+def clean_rainfall(loc, kind):
     df = pd.read_excel(
         io = loc,
         header = [1,2],
@@ -11,8 +11,8 @@ def clean_rainfall(loc):
     Null = list()
     df.apply(lambda x : Null.append(x.name) if x.isna().sum() == df.shape[1] else None,axis = 1)
     Null = pd.DataFrame(Null)
-    Null.to_csv('../Datasets/Null_Districts(' + loc[-8 : -4] + ').csv')
+    Null.to_csv('../Datasets/Null_Districts_' + kind + '(' + loc[-8 : -4] + ').csv')
     df = df.dropna(how = 'all')
     df = df.dropna(how = 'all', axis = 1)
-    df.to_csv('../Datasets/Rainfall(' + loc[-8 : -4] + ').csv')
+    df.to_csv('../Datasets/' + kind + '(' + loc[-8 : -4] + ').csv')
     return df
